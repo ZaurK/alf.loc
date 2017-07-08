@@ -8,15 +8,15 @@ use backend\models\ProductionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\UploadForm;
-use yii\web\UploadedFile;
+
 use yii\imagine\Image;
 use Imagine\Gd;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Point;
 use yii\filters\AccessControl;
-
+use backend\models\UploadsForm;
+use yii\web\UploadedFile;
 
 /**
  * ProductionController implements the CRUD actions for Production model.
@@ -37,7 +37,7 @@ class ProductionController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'update', 'view', 'create', 'delete'],
+                        'actions' => ['logout', 'index', 'update', 'view', 'create', 'delete', 'upload'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -53,6 +53,22 @@ class ProductionController extends Controller
         ];
     }
 
+	
+	public function actionUpload()
+    {
+        $upl_model = new UploadsForm();
+
+        if (Yii::$app->request->isPost) {
+            $upl_model->imageFile = UploadedFile::getInstance($upl_model, 'imageFile');
+            if ($upl_model->upload()) {
+                // file is uploaded successfully
+                return;
+            }
+        }
+
+        return $this->render('upload', ['model' => $upl_model]);
+    }
+	
     /**
      * Lists all Production models.
      * @return mixed

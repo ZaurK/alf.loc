@@ -868,3 +868,22 @@ button:focus {
     color:#000000;
 }
 
+/* Стили для вывода нескольких фото на странице продукции */
+.imgs{
+    width:30%;
+	float:left;
+	margin: 5px;
+	border: solid thin #ccc;
+	padding: 5px;
+}
+.imgs:first-of-type{
+    width:100%;
+	margin-bottom:24px;
+	border: none;
+	padding: 0px;
+}
+.imgs:hover{
+   -webkit-box-shadow: 0px 0px 16px 1px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 16px 1px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 16px 1px rgba(0,0,0,0.75);
+}

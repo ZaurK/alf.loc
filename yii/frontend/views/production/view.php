@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use frontend\models\Category;
 use frontend\models\Production;
+use frontend\models\Image;
 use yii\widgets\Breadcrumbs;
 
 /* @var $this yii\web\View */
@@ -24,9 +25,19 @@ $this->params['breadcrumbs'][] = ['label' => $model->ptitle, ];
 <div class="col-sm-12 col-md-6">
 <br>
  <?php
-    if(isset($model->image) && file_exists(Yii::getAlias('@webroot', $model->image))) { 	
-        echo Html::a(Html::img("@frontendWebroot/uploads/images/$model->image"), "@frontendWebroot/uploads/images/$model->image", ['rel' => 'fancybox', 'title'=>$model->ptitle, 'style'=>'max-width:100%']);
-	}
+ $images = Image::find()
+      ->where(['id_production' => $model->id])
+	  ->all();
+	  foreach($images as $image){
+	      if(isset($image['imagePath']) && file_exists(Yii::getAlias('@webroot', $image['imagePath']))) { 	
+		     echo "<div class='imgs'>";
+             echo Html::a(Html::img("@frontendWebroot/uploads/images/thumbs/$image->imagePath"), 
+			 "@frontendWebroot/uploads/images/$image->imagePath", 
+			 ['rel' => 'fancybox',  'style'=>'max-width:100%']);
+			 echo "</div>";
+	      }
+	  }
+    
  ?>			
 
 <div class="sharebutns">

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use backend\models\Image;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductionSearch */
@@ -34,13 +35,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'label' => 'Картинка',
             'format' => 'raw',
             'value' => function($data){
-                return Html::img('@frontendWebroot/uploads/images/' .$data->image, [
+			    
+				$imgs = Image::find()
+				        ->where(['id_production' => $data->id])
+                        ->one();
+                
+				$text = Html::img('@frontendWebroot/uploads/images/' .$imgs->imagePath, [
                     'alt'=>'',
                     'style' => 'width:100%;'
                 ]);
+				$url = Url::toRoute(['image/upload', 'id'=>$data->id]);
+				return Html::a($text, $url);
             },
 			 'contentOptions'=>['style'=>'max-width: 100px;'] 
             ],
+			
             //'id_category',
             [
                 'attribute'=>'ptitle',
