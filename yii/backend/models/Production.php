@@ -36,13 +36,13 @@ class Production extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-		    [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
-            [['id_category', 'ptitle'], 'required'],
+            [['ptitle'], 'required'],
             [['id_category', 'promo'], 'integer'],
-            [['pdescription', 'pprice', 'image'], 'string'],
+            [['pdescription', 'pprice'], 'string'],
             [['ptitle', 'pprice'], 'string', 'max' => 256],
 			[['ptitle'], 'unique'],
 			[['id_category'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['id_category' => 'id']],
+
         ];
     }
 
@@ -57,8 +57,8 @@ class Production extends \yii\db\ActiveRecord
             'ptitle' => 'Заголовок',
             'pdescription' => 'Описание',
 			'pprice' => 'Цена',
-            'file' => 'Изображение',
-            'image' => 'Изображение',
+            //'file' => 'Изображение',
+            //'image' => 'Изображение',
             'promo' => 'В блок лучших работ',
         ];
     }

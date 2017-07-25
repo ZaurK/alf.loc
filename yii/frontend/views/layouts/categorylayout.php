@@ -135,7 +135,6 @@ echo newerton\fancybox\FancyBox::widget([
 											<ul class="nav navbar-nav navbar-right">
 												<li class="active"><a href="<?= Url::toRoute(['site/index', '#' => 'banner']); ?>">Альфа</a></li>
 												<li><a href="<?= Url::toRoute(['site/index', '#' => 'services']); ?>">Услуги</a></li>
-												<li><a href="<?= Url::toRoute(['site/delivery']); ?>">Доставка</a></li>
 												<li><a href="<?= Url::toRoute(['site/index', '#' => 'clients']); ?>">Клиенты</a></li>
 												<li><a href="<?= Url::toRoute(['site/index', '#' => 'contact']); ?>">Контакты</a></li>
 											</ul>
@@ -210,8 +209,23 @@ echo newerton\fancybox\FancyBox::widget([
 			<!-- ================ -->
 			<div class="subfooter">
 				<div class="container">
-        <p class="pull-left">&copy; Альфапринт 2009-<?= date('Y') ?></p>
+        <p class="pull-left">&copy; Альфа 2009-<?= date('Y') ?></p>
         <!--<p class="pull-right"><?= Yii::powered() ?></p>-->
+		
+		<div class="pull-right">
+		<!--LiveInternet counter--><script type="text/javascript">
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t14.2;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число просмотров за 24"+
+" часа, посетителей за 24 часа и за сегодня' "+
+"border='0' width='88' height='31'><\/a>")
+</script><!--/LiveInternet-->
+		
+		</div>
     </div>
 			</div>
 			<!-- .subfooter end -->

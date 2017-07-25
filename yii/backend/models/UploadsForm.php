@@ -42,7 +42,7 @@ class UploadsForm extends \yii\db\ActiveRecord
 			$newParam = min($origWidth, $origHeight);
 			$size = new Box($newParam, $newParam);
 			if($origWidth > $origHeight){ 
-			    $x = $origWidth/4;
+			    $x = $origWidth/5;
 			    $point = new Point($x, 0);
 			    }else {
 			        $point = new Point(0, 0);

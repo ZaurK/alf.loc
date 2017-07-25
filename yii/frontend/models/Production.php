@@ -63,4 +63,11 @@ class Production extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Category::className(), ['id' => 'id_category']);
     }
+	/**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImage()
+    {
+        return $this->hasMany(Image::className(), ['id_production' => 'id']);
+    }
 }

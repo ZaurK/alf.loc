@@ -27,13 +27,7 @@ use backend\models\Category;
 
 	<?= $form->field($model, 'promo')->checkbox(['label'=>'В блок лучших работ']) ?>
 
-	 <?php
-    if(isset($model->image) && file_exists(Yii::getAlias('@webroot', $model->image)))
-    { 
-        echo Html::img('@frontendWebroot/uploads/images/' . $model->image, ['class'=>'']);
-    } 
-    ?>
-    <?= $form->field($model, 'file')->fileInput(['readonly' => true]) ?>
+	    
 	
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

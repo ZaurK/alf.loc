@@ -44,4 +44,13 @@ class Image extends \yii\db\ActiveRecord
             'imagePath' => 'Image Path',
         ];
     }
+	
+	 /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduction()
+    {
+        return $this->hasOne(Production::className(), ['id' => 'id_production']);
+    }
+	
 }

@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use yii\imagine\Image;
+use backend\models\Image;
 use Imagine\Gd;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
@@ -54,20 +54,7 @@ class ProductionController extends Controller
     }
 
 	
-	public function actionUpload()
-    {
-        $upl_model = new UploadsForm();
-
-        if (Yii::$app->request->isPost) {
-            $upl_model->imageFile = UploadedFile::getInstance($upl_model, 'imageFile');
-            if ($upl_model->upload()) {
-                // file is uploaded successfully
-                return;
-            }
-        }
-
-        return $this->render('upload', ['model' => $upl_model]);
-    }
+	
 	
     /**
      * Lists all Production models.
@@ -105,40 +92,8 @@ class ProductionController extends Controller
     {
         $model = new Production();
         if ($model->load(Yii::$app->request->post())) {
-            
-            //get the instance of uploaded file
-            $imageName = rand(1000,100000);
-            $model->file = UploadedFile::getInstance($model, 'file');
-           
-            //saving
-            $model->image = $imageName.'.'.$model->file->extension;
             $model->save();
-            $model->file->saveAs(Yii::getAlias('@uploads/images/' . $imageName. '.' .$model->file->extension));
-            //saving thumbnail
-            $dirfrom = Yii::getAlias('@uploads/images/');
-            $dirto = Yii::getAlias('@uploads/images/thumbs/');
-
-           
-            $sourceImage = Image::getImagine()->open($dirfrom . $imageName. '.' .$model->file->extension);
-			$sourceImageSize = $sourceImage->getSize();
-			$origWidth = $sourceImageSize->getWidth();
-			$origHeight = $sourceImageSize->getHeight();
-			$newParam = min($origWidth, $origHeight);
-			
-			$size = new Box($newParam, $newParam);
-			if($origWidth > $origHeight){ 
-			    $x = $origWidth/4;
-			    $point = new Point($x, 0);
-			    }else {
-			        $point = new Point(0, 0);
-					}
-                    $sourceImage->crop($point, $size)
-			    ->thumbnail($size)
-                ->save($dirto . $imageName.'.'.$model->file->extension, ['quality' => 90]);
-            
-            
-          
-           
+      
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -156,46 +111,8 @@ class ProductionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $current_image = $model->image;
-        if ($model->load(Yii::$app->request->post())) {
-		    $model->save();
-            //get the instance of uploaded file
-            $model->file = UploadedFile::getInstance($model, 'file');
-             //Если загружается новое фото, удаляем старое            
-                    if($model->file)
-                    {
-                        if(file_exists(Yii::getAlias('@uploads/images/' .$current_image)))
-                        {
-                            //удаляем файл
-                            unlink(Yii::getAlias('@uploads/images/' .$current_image));
-                            unlink(Yii::getAlias('@uploads/images/thumbs/' .$current_image));
-                            $model->image = '';
-                        }
-                            //saving
-                            //$model->save();
-                            $model->file->saveAs(Yii::getAlias('@uploads/images/'.$current_image));
-							//saving thumbnail
-                            $dirfrom = Yii::getAlias('@uploads/images/');
-                            $dirto = Yii::getAlias('@uploads/images/thumbs/');
-							
-            $sourceImage = Image::getImagine()->open($dirfrom . $current_image);
-			$sourceImageSize = $sourceImage->getSize();
-			$origWidth = $sourceImageSize->getWidth();
-			$origHeight = $sourceImageSize->getHeight();
-			$newParam = min($origWidth, $origHeight);
-			
-            $size = new Box($newParam, $newParam);
-			if($origWidth > $origHeight){ 
-			    $x = $origWidth/4;
-			    $point = new Point($x, 0);
-			    }else {
-			        $point = new Point(0, 0);
-					}
-                    $sourceImage->crop($point, $size)
-			    ->thumbnail($size)
-                ->save($dirto . $current_image, ['quality' => 90]);
-                    }
-               
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -213,13 +130,28 @@ class ProductionController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $current_image = $model->image;
+        //$current_images = Image::find()
+		               // ->where(['id_production' => $model->id])
+						//->all();
+		//echo "<pre>";
+		//print_r($current_image)	;
+        //exit();		
         //удаляем файл, если он есть
-        if(isset($current_image) && file_exists(Yii::getAlias('@uploads/images/' .$current_image))) { 
-            unlink(Yii::getAlias('@uploads/images/' .$current_image));
-			unlink(Yii::getAlias('@uploads/images/thumbs/' .$current_image));
-        }
-        $this->findModel($id)->delete();
+		//foreach($current_images as $current_image){
+		   //echo $current_image['imagePath'];
+		    //if(isset($current_image) && file_exists(Yii::getAlias('@uploads/images/' .$current_image['imagePath']))) { 
+            //unlink(Yii::getAlias('@uploads/images/' .$current_image['imagePath']));
+		 	//unlink(Yii::getAlias('@uploads/images/thumbs/' .$current_image['imagePath']));
+			//$imgmod = Image::find($current_image['id'])->one();
+			//if($imgmod){
+			 //   $imgmod->delete();
+			//}
+			//return $this->redirect(['upload', 'id'=>$this->id]);
+         //}
+		
+		//}
+       
+       $this->findModel($id)->delete();
         
         return $this->redirect(['index']);
     }

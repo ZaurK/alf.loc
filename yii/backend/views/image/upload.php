@@ -38,7 +38,7 @@ echo "<div class='row'>";
 		echo Html::img('@frontendWebroot/uploads/images/thumbs/' . $pimage['imagePath'], ['class'=>'']);
 		
 		echo "<div class='imgblockdel'>";
-		echo Html::a("<span class='glyphicon glyphicon-remove '></span>",	['image/delete', 'id' => $pimage['id'] ]); 
+		echo Html::a("<span class='glyphicon glyphicon-trash '></span>",	['image/delete', 'id' => $pimage['id'] ]); 
 		echo "</div>";
 		
 		echo "</div>";		

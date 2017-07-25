@@ -37,15 +37,16 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
+   
+    if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
+    } else {
+	     $menuItems = [
         ['label' => 'Главная', 'url' => ['/site/index']],
 		['label' => 'Слайдер', 'url' => ['/topslider']],
         ['label' => 'Услуги', 'url' => ['/category']],
 
     ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
-    } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -73,7 +74,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Альфапринт 2009-<?= date('Y') ?></p>
+        <p class="pull-left">&copy; Альфа 2009-<?= date('Y') ?></p>
         <!--<p class="pull-right"><?= Yii::powered() ?></p>-->
     </div>
 </footer>

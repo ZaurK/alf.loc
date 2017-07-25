@@ -44,6 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'alt'=>'',
                     'style' => 'width:100%;'
                 ]);
+				$noimg = Html::img('@frontendWebroot/skins/images/noimage.png', [
+                    'alt'=>'',
+                    'style' => 'width:100%;'
+                ]);
+				$text =($imgs)? $text : $noimg;
 				$url = Url::toRoute(['image/upload', 'id'=>$data->id]);
 				return Html::a($text, $url);
             },
